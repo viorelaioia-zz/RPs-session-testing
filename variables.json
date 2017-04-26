@@ -1,0 +1,17 @@
+{
+  "ldap_user": {
+    "email": "",
+    "password": "",
+    "secret_seed": ""
+    },
+  "token": {
+    "client_id": "",
+    "client_secret": "",
+    "audience": "",
+    "url": "",
+    "api": ""
+  },
+  "RPs_urls": {
+    "testRP": ""
+   }
+}
