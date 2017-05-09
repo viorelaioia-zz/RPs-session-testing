@@ -8,7 +8,7 @@ def capabilities = [
 ]
 
 pipeline {
-  agent {label 'mesos'}
+  agent {label 'mesos-testing'}
   options {
     timestamps()
     timeout(time: 1, unit: 'HOURS')
