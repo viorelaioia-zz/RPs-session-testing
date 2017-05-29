@@ -4,10 +4,9 @@ from pages.auth0 import Auth0
 from pages.base import Base
 
 
-class RpTest(Base):
-    _sign_in_button = (By.CSS_SELECTOR, '.btn-signin.btn-signin-charcoal')
-
-    _logout_button_locator = (By.CSS_SELECTOR, '#main-content a[href="/logout"]')
+class Reps(Base):
+    _sign_in_button = (By.CSS_SELECTOR, '#login-menu-locator a')
+    _logout_button_locator = (By.CSS_SELECTOR, '#logout-menu-locator a[href="/oidc/logout/"]')
 
     def __init__(self, selenium, url):
         Base.__init__(self, selenium)
