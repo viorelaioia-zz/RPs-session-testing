@@ -11,7 +11,7 @@ class Standups(Base):
     _user_menu_locator = (By.CSS_SELECTOR, '#user-menu img')
 
     def __init__(self, selenium, url):
-        Base.__init__(self, selenium)
+        super(Standups, self).__init__(selenium)
         self.go_to_url(url)
 
     def login_with_ldap(self, email, password, passcode):

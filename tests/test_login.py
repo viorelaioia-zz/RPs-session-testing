@@ -10,6 +10,8 @@ from pages.standups import Standups
 from pages.rptest import RpTest
 from tests import conftest
 
+TIME_TO_WAIT_FOR = 900
+
 
 class TestLogin:
 
@@ -21,7 +23,7 @@ class TestLogin:
         api = token['api']
         user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})
         initial_user_log_date = json.loads(user_logs.content)[0]['date']
-        time.sleep(900)
+        time.sleep(TIME_TO_WAIT_FOR)
         test.refresh_page()
         user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})
         last_user_log_type = json.loads(user_logs.content)[0]['type']
@@ -38,7 +40,7 @@ class TestLogin:
         api = token['api']
         user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})
         initial_user_log_date = json.loads(user_logs.content)[0]['date']
-        time.sleep(900)
+        time.sleep(TIME_TO_WAIT_FOR)
         test.refresh_page()
         user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})
         current_user_log_date = json.loads(user_logs.content)[0]['date']
@@ -53,7 +55,7 @@ class TestLogin:
         api = token['api']
         user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})
         initial_user_log_date = json.loads(user_logs.content)[0]['date']
-        time.sleep(900)
+        time.sleep(TIME_TO_WAIT_FOR)
         test.refresh_page()
         user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})
         current_user_log_date = json.loads(user_logs.content)[0]['date']
@@ -67,7 +69,7 @@ class TestLogin:
         api = token['api']
         user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})
         initial_user_log_date = json.loads(user_logs.content)[0]['date']
-        time.sleep(900)
+        time.sleep(TIME_TO_WAIT_FOR)
         test.refresh_page()
         user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})
         current_user_log_date = json.loads(user_logs.content)[0]['date']
@@ -81,7 +83,7 @@ class TestLogin:
         api = token['api']
         user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})
         initial_user_log_date = json.loads(user_logs.content)[0]['date']
-        time.sleep(900)
+        time.sleep(TIME_TO_WAIT_FOR)
         test.refresh_page()
         user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})
         current_user_log_date = json.loads(user_logs.content)[0]['date']

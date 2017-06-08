@@ -10,7 +10,7 @@ class RpTest(Base):
     _logout_button_locator = (By.CSS_SELECTOR, '#main-content a[href="/logout"]')
 
     def __init__(self, selenium, url):
-        Base.__init__(self, selenium)
+        super(RpTest, self).__init__(selenium)
         self.go_to_url(url)
 
     def login_with_ldap(self, email, password, passcode):

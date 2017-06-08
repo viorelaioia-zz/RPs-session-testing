@@ -9,7 +9,7 @@ class Moderator(Base):
     _logout_button_locator = (By.CSS_SELECTOR, 'a[href="/oidc/logout/"]')
 
     def __init__(self, selenium, url):
-        Base.__init__(self, selenium)
+        super(Moderator, self).__init__(selenium)
         self.go_to_url(url)
 
     def logout(self):

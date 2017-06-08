@@ -12,7 +12,7 @@ class Mozillians(Base):
     _dropdown_menu_locator = (By.CSS_SELECTOR, 'ul.dropdown-menu')
 
     def __init__(self, selenium, url):
-        Base.__init__(self, selenium)
+        super(Mozillians, self).__init__(selenium)
         self.go_to_url(url)
 
     @property
