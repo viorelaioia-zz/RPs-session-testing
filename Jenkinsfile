@@ -4,7 +4,8 @@
 def capabilities = [
   browserName: 'Firefox',
   version: '53.0',
-  platform: 'Windows 10'
+  platform: 'Windows 10',
+  idleTimeout: '910'
 ]
 
 pipeline {
