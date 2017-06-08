@@ -12,6 +12,10 @@
     "api": ""
   },
   "RPs_urls": {
-    "testRP": ""
+    "testRP": "",
+    "mozillians": "",
+    "moderator": "",
+    "reps": "",
+    "standups": ""
    }
 }
