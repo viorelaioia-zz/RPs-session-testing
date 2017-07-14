@@ -19,10 +19,14 @@ class Mozillians(Base):
     def is_logout_menu_item_present(self):
         return self.is_element_present(*self._logout_menu_item_locator)
 
-    def login_with_ldap(self, email, password, passcode):
+    def login_with_ldap(self, email, password):
         self.selenium.find_element(*self._sign_in_button).click()
         auth = Auth0(self.selenium)
-        auth.login_with_ldap(email, password, passcode)
+        auth.login_with_ldap(email, password)
+
+    def enter_passcode(self, secret_seed):
+        auth = Auth0(self.selenium)
+        auth.enter_passcode(secret_seed)
 
     def click_logout(self):
         self.click_options()
@@ -33,3 +37,7 @@ class Mozillians(Base):
         self.selenium.find_element(*self._profile_menu_locator).click()
         WebDriverWait(self.selenium, self.timeout).until(
             lambda s: self.selenium.find_element(*self._dropdown_menu_locator))
+
+    def wait_for_passcode_to_change(self, secret_seed, current_passcode):
+        auth = Auth0(self.selenium)
+        auth.wait_for_passcode_to_change(secret_seed, current_passcode)

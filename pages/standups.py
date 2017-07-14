@@ -5,7 +5,7 @@ from pages.base import Base
 
 
 class Standups(Base):
-    _sign_in_button_locator = (By.CSS_SELECTOR, 'a[href="/login-form/"]')
+    _sign_in_button_locator = (By.CSS_SELECTOR, 'a[href="/accounts/login/"]')
     _sign_in_to_standup_button_locator = (By.CSS_SELECTOR, '.btn.login-button')
     _logout_button_locator = (By.ID, 'logout-link')
     _user_menu_locator = (By.CSS_SELECTOR, '#user-menu img')
@@ -14,14 +14,22 @@ class Standups(Base):
         super(Standups, self).__init__(selenium)
         self.go_to_url(url)
 
-    def login_with_ldap(self, email, password, passcode):
+    def login_with_ldap(self, email, password):
         self.selenium.find_element(*self._sign_in_button_locator).click()
         self.wait_for_element_visible(*self._sign_in_to_standup_button_locator)
         self.selenium.find_element(*self._sign_in_to_standup_button_locator).click()
         auth = Auth0(self.selenium)
-        auth.login_with_ldap(email, password, passcode)
+        auth.login_with_ldap(email, password)
 
     def click_logout(self):
         self.selenium.find_element(*self._user_menu_locator).click()
         self.wait_for_element_visible(*self._logout_button_locator)
         self.selenium.find_element(*self._logout_button_locator).click()
+
+    def enter_passcode(self, secret_seed):
+        auth = Auth0(self.selenium)
+        auth.enter_passcode(secret_seed)
+
+    def wait_for_passcode_to_change(self, secret_seed, current_passcode):
+        auth = Auth0(self.selenium)
+        auth.wait_for_passcode_to_change(secret_seed, current_passcode)

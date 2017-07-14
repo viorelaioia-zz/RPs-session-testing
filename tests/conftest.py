@@ -43,3 +43,15 @@ def access_token(token):
     }
     response = requests.post(token['url'], data=json.dumps(data), headers=headers)
     return json.loads(response.content)['access_token']
+
+
+@pytest.fixture
+def file_content(filename):
+    return open(filename, 'r').read()
+
+
+@pytest.fixture
+def write_in_file(filename, content):
+    f = open(filename, 'w')
+    f.write(content)  # python will convert \n to os.linesep
+    f.close()
