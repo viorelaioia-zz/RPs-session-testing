@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 
 from pages.auth0 import Auth0
 from pages.base import Base
+from pages.two_factor_authentication import TwoFactorAuthentication
 
 
 class Moderator(Base):
@@ -12,6 +13,10 @@ class Moderator(Base):
         super(Moderator, self).__init__(selenium)
         self.go_to_url(url)
 
+    @property
+    def is_logout_button_displayed(self):
+        return self.is_element_visible(*self._logout_button_locator)
+
     def logout(self):
         self.selenium.find_element(*self._logout_button_locator).click()
 
@@ -19,11 +24,4 @@ class Moderator(Base):
         self.selenium.find_element(*self._login_button).click()
         auth = Auth0(self.selenium)
         auth.login_with_ldap(email, password)
-
-    def enter_passcode(self, secret_seed):
-        auth = Auth0(self.selenium)
-        auth.enter_passcode(secret_seed)
-
-    def wait_for_passcode_to_change(self, secret_seed, current_passcode):
-        auth = Auth0(self.selenium)
-        auth.wait_for_passcode_to_change(secret_seed, current_passcode)
+        return TwoFactorAuthentication(self.selenium)

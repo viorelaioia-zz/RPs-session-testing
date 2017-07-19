@@ -18,10 +18,13 @@ class TestLogin:
     @pytest.mark.nondestructive
     def test_login_testrp(self, selenium, ldap, token, urls):
         test = RpTest(selenium, urls['testRP'])
-        passcode = conftest.passcode(ldap['secret_seed'])
-        conftest.write_in_file("passcodes", passcode)
-        test.login_with_ldap(ldap['email'], ldap['password'])
-        test.enter_passcode(passcode)
+        current_passcode = conftest.passcode(ldap['secret_seed'])
+        two_factor_authentication_page = test.login_with_ldap(ldap['email'], ldap['password'])
+        two_factor_authentication_page.enter_passcode(current_passcode)
+        while two_factor_authentication_page.is_error_message_displayed:
+            two_factor_authentication_page.wait_for_passcode_to_change(ldap['secret_seed'], current_passcode)
+            two_factor_authentication_page.enter_passcode(conftest.passcode(ldap['secret_seed']))
+        assert test.is_logout_button_displayed
         access_token = conftest.access_token(token)
         api = token['api']
         user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})
@@ -38,16 +41,13 @@ class TestLogin:
     @pytest.mark.nondestructive
     def test_login_mozillians(self, selenium, ldap, token, urls):
         test = Mozillians(selenium, urls['mozillians'])
-        test.login_with_ldap(ldap['email'], ldap['password'])
+        two_factor_authentication_page = test.login_with_ldap(ldap['email'], ldap['password'])
         current_passcode = conftest.passcode(ldap['secret_seed'])
-        passcode_from_file = conftest.file_content("passcodes")
-        while passcode_from_file == current_passcode:
-            test.wait_for_passcode_to_change(ldap['secret_seed'], current_passcode)
-            current_passcode = conftest.passcode(ldap['secret_seed'])
-            passcode_from_file = conftest.file_content("passcodes")
-        passcode = conftest.passcode(ldap['secret_seed'])
-        conftest.write_in_file("passcodes", passcode)
-        test.enter_passcode(passcode)
+        two_factor_authentication_page.enter_passcode(current_passcode)
+        while two_factor_authentication_page.is_error_message_displayed:
+            two_factor_authentication_page.wait_for_passcode_to_change(ldap['secret_seed'], current_passcode)
+            two_factor_authentication_page.enter_passcode(conftest.passcode(ldap['secret_seed']))
+        assert test.is_username_displayed
         access_token = conftest.access_token(token)
         api = token['api']
         user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})
@@ -62,16 +62,13 @@ class TestLogin:
     @pytest.mark.nondestructive
     def test_login_moderator(self, selenium, ldap, token, urls):
         test = Moderator(selenium, urls['moderator'])
-        test.login_with_ldap(ldap['email'], ldap['password'])
+        two_factor_authentication_page = test.login_with_ldap(ldap['email'], ldap['password'])
         current_passcode = conftest.passcode(ldap['secret_seed'])
-        passcode_from_file = conftest.file_content("passcodes")
-        while passcode_from_file == current_passcode:
-            test.wait_for_passcode_to_change(ldap['secret_seed'], current_passcode)
-            current_passcode = conftest.passcode(ldap['secret_seed'])
-            passcode_from_file = conftest.file_content("passcodes")
-        passcode = conftest.passcode(ldap['secret_seed'])
-        conftest.write_in_file("passcodes", passcode)
-        test.enter_passcode(passcode)
+        two_factor_authentication_page.enter_passcode(current_passcode)
+        while two_factor_authentication_page.is_error_message_displayed:
+            two_factor_authentication_page.wait_for_passcode_to_change(ldap['secret_seed'], current_passcode)
+            two_factor_authentication_page.enter_passcode(conftest.passcode(ldap['secret_seed']))
+        assert test.is_logout_button_displayed
         access_token = conftest.access_token(token)
         api = token['api']
         user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})
@@ -85,16 +82,13 @@ class TestLogin:
 
     def test_login_reps(self, selenium, ldap, token, urls):
         test = Reps(selenium, urls['reps'])
-        test.login_with_ldap(ldap['email'], ldap['password'])
+        two_factor_authentication_page = test.login_with_ldap(ldap['email'], ldap['password'])
         current_passcode = conftest.passcode(ldap['secret_seed'])
-        passcode_from_file = conftest.file_content("passcodes")
-        while passcode_from_file == current_passcode:
-            test.wait_for_passcode_to_change(ldap['secret_seed'], current_passcode)
-            current_passcode = conftest.passcode(ldap['secret_seed'])
-            passcode_from_file = conftest.file_content("passcodes")
-        passcode = conftest.passcode(ldap['secret_seed'])
-        conftest.write_in_file("passcodes", passcode)
-        test.enter_passcode(passcode)
+        two_factor_authentication_page.enter_passcode(current_passcode)
+        while two_factor_authentication_page.is_error_message_displayed:
+            two_factor_authentication_page.wait_for_passcode_to_change(ldap['secret_seed'], current_passcode)
+            two_factor_authentication_page.enter_passcode(conftest.passcode(ldap['secret_seed']))
+        assert test.is_logout_button_displayed
         access_token = conftest.access_token(token)
         api = token['api']
         user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})
@@ -108,16 +102,13 @@ class TestLogin:
 
     def test_login_standups(self, selenium, ldap, token, urls):
         test = Standups(selenium, urls['standups'])
-        test.login_with_ldap(ldap['email'], ldap['password'])
+        two_factor_authentication_page = test.login_with_ldap(ldap['email'], ldap['password'])
         current_passcode = conftest.passcode(ldap['secret_seed'])
-        passcode_from_file = conftest.file_content("passcodes")
-        while passcode_from_file == current_passcode:
-            test.wait_for_passcode_to_change(ldap['secret_seed'], current_passcode)
-            current_passcode = conftest.passcode(ldap['secret_seed'])
-            passcode_from_file = conftest.file_content("passcodes")
-        passcode = conftest.passcode(ldap['secret_seed'])
-        conftest.write_in_file("passcodes", passcode)
-        test.enter_passcode(passcode)
+        two_factor_authentication_page.enter_passcode(current_passcode)
+        while two_factor_authentication_page.is_error_message_displayed:
+            two_factor_authentication_page.wait_for_passcode_to_change(ldap['secret_seed'], current_passcode)
+            two_factor_authentication_page.enter_passcode(conftest.passcode(ldap['secret_seed']))
+        assert test.is_logout_button_displayed
         access_token = conftest.access_token(token)
         api = token['api']
         user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})

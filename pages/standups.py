@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 
 from pages.auth0 import Auth0
 from pages.base import Base
+from pages.two_factor_authentication import TwoFactorAuthentication
 
 
 class Standups(Base):
@@ -14,22 +15,19 @@ class Standups(Base):
         super(Standups, self).__init__(selenium)
         self.go_to_url(url)
 
+    @property
+    def is_logout_button_displayed(self):
+        return self.is_element_visible(*self._logout_button_locator)
+
     def login_with_ldap(self, email, password):
         self.selenium.find_element(*self._sign_in_button_locator).click()
         self.wait_for_element_visible(*self._sign_in_to_standup_button_locator)
         self.selenium.find_element(*self._sign_in_to_standup_button_locator).click()
         auth = Auth0(self.selenium)
         auth.login_with_ldap(email, password)
+        return TwoFactorAuthentication(self.selenium)
 
     def click_logout(self):
         self.selenium.find_element(*self._user_menu_locator).click()
         self.wait_for_element_visible(*self._logout_button_locator)
         self.selenium.find_element(*self._logout_button_locator).click()
-
-    def enter_passcode(self, secret_seed):
-        auth = Auth0(self.selenium)
-        auth.enter_passcode(secret_seed)
-
-    def wait_for_passcode_to_change(self, secret_seed, current_passcode):
-        auth = Auth0(self.selenium)
-        auth.wait_for_passcode_to_change(secret_seed, current_passcode)
