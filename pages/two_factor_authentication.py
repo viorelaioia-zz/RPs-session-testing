@@ -1,3 +1,4 @@
+import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 
@@ -21,6 +22,7 @@ class TwoFactorAuthentication(Base):
 
     @property
     def is_error_message_displayed(self):
+        time.sleep(4)
         if self.is_element_present(*self._duo_iframe_locator):
             self.selenium.switch_to_frame('duo_iframe')
             is_message_shown = self.selenium.find_element(*self._error_message_locator).is_displayed()
