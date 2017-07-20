@@ -25,17 +25,6 @@ class TestLogin:
             two_factor_authentication_page.wait_for_passcode_to_change(ldap['secret_seed'], current_passcode)
             two_factor_authentication_page.enter_passcode(conftest.passcode(ldap['secret_seed']))
         assert test.is_logout_button_displayed
-        access_token = conftest.access_token(token)
-        api = token['api']
-        user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})
-        initial_user_log_date = json.loads(user_logs.content)[0]['date']
-        time.sleep(TIME_TO_WAIT_FOR)
-        test.refresh_page()
-        user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})
-        last_user_log_type = json.loads(user_logs.content)[0]['type']
-        assert last_user_log_type == "ssa"
-        current_user_log_date = json.loads(user_logs.content)[0]['date']
-        assert current_user_log_date > initial_user_log_date
         test.click_logout()
 
     @pytest.mark.nondestructive
@@ -48,15 +37,6 @@ class TestLogin:
             two_factor_authentication_page.wait_for_passcode_to_change(ldap['secret_seed'], current_passcode)
             two_factor_authentication_page.enter_passcode(conftest.passcode(ldap['secret_seed']))
         assert test.is_username_displayed
-        access_token = conftest.access_token(token)
-        api = token['api']
-        user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})
-        initial_user_log_date = json.loads(user_logs.content)[0]['date']
-        time.sleep(TIME_TO_WAIT_FOR)
-        test.refresh_page()
-        user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})
-        current_user_log_date = json.loads(user_logs.content)[0]['date']
-        assert current_user_log_date > initial_user_log_date
         test.click_logout()
 
     @pytest.mark.nondestructive
@@ -69,15 +49,6 @@ class TestLogin:
             two_factor_authentication_page.wait_for_passcode_to_change(ldap['secret_seed'], current_passcode)
             two_factor_authentication_page.enter_passcode(conftest.passcode(ldap['secret_seed']))
         assert test.is_logout_button_displayed
-        access_token = conftest.access_token(token)
-        api = token['api']
-        user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})
-        initial_user_log_date = json.loads(user_logs.content)[0]['date']
-        time.sleep(TIME_TO_WAIT_FOR)
-        test.refresh_page()
-        user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})
-        current_user_log_date = json.loads(user_logs.content)[0]['date']
-        assert current_user_log_date > initial_user_log_date
         test.logout()
 
     def test_login_reps(self, selenium, ldap, token, urls):
@@ -89,15 +60,6 @@ class TestLogin:
             two_factor_authentication_page.wait_for_passcode_to_change(ldap['secret_seed'], current_passcode)
             two_factor_authentication_page.enter_passcode(conftest.passcode(ldap['secret_seed']))
         assert test.is_logout_button_displayed
-        access_token = conftest.access_token(token)
-        api = token['api']
-        user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})
-        initial_user_log_date = json.loads(user_logs.content)[0]['date']
-        time.sleep(TIME_TO_WAIT_FOR)
-        test.refresh_page()
-        user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})
-        current_user_log_date = json.loads(user_logs.content)[0]['date']
-        assert current_user_log_date > initial_user_log_date
         test.click_logout()
 
     def test_login_standups(self, selenium, ldap, token, urls):
@@ -109,13 +71,4 @@ class TestLogin:
             two_factor_authentication_page.wait_for_passcode_to_change(ldap['secret_seed'], current_passcode)
             two_factor_authentication_page.enter_passcode(conftest.passcode(ldap['secret_seed']))
         assert test.is_logout_button_displayed
-        access_token = conftest.access_token(token)
-        api = token['api']
-        user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})
-        initial_user_log_date = json.loads(user_logs.content)[0]['date']
-        time.sleep(TIME_TO_WAIT_FOR)
-        test.refresh_page()
-        user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})
-        current_user_log_date = json.loads(user_logs.content)[0]['date']
-        assert current_user_log_date > initial_user_log_date
         test.click_logout()

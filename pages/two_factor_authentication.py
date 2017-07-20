@@ -10,7 +10,6 @@ class TwoFactorAuthentication(Base):
     _passcode_field_locator = (By.CSS_SELECTOR, '.passcode-label input[name="passcode"]')
     _duo_iframe_locator = (By.ID, 'duo_iframe')
     _error_message_locator = (By.CSS_SELECTOR, '.message.error')
-    _div_locator = (By.CSS_SELECTOR, '.a0-notloggedin.a0-mode')
 
     def enter_passcode(self, passcode):
         self.selenium.switch_to_frame('duo_iframe')
@@ -22,7 +21,13 @@ class TwoFactorAuthentication(Base):
 
     @property
     def is_error_message_displayed(self):
-        return self.selenium.find_element(*self._error_message_locator).is_displayed()
+        if not self.is_element_present(*self._duo_iframe_locator):
+            return False
+        else:
+            self.selenium.switch_to_frame('duo_iframe')
+            is_message_shown = self.selenium.find_element(*self._error_message_locator).is_displayed()
+            self.selenium.switch_to_default_content()
+            return is_message_shown
 
     def wait_for_passcode_to_change(self, secret_seed, current_passcode):
         WebDriverWait(self.selenium, self.timeout).until(lambda s: conftest.passcode(secret_seed) != current_passcode)
