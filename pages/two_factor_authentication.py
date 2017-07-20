@@ -22,12 +22,7 @@ class TwoFactorAuthentication(Base):
 
     @property
     def is_error_message_displayed(self):
-        if self.is_element_present(*self._div_locator):
-            self.selenium.switch_to_frame('duo_iframe')
-            is_message_shown = self.selenium.find_element(*self._error_message_locator).is_displayed()
-            self.selenium.switch_to_default_content()
-            return is_message_shown
-        return False
+        return self.selenium.find_element(*self._error_message_locator).is_displayed()
 
     def wait_for_passcode_to_change(self, secret_seed, current_passcode):
         WebDriverWait(self.selenium, self.timeout).until(lambda s: conftest.passcode(secret_seed) != current_passcode)
