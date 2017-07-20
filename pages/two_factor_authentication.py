@@ -1,3 +1,4 @@
+import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 
@@ -21,13 +22,13 @@ class TwoFactorAuthentication(Base):
 
     @property
     def is_error_message_displayed(self):
-        if not self.is_element_present(*self._duo_iframe_locator):
-            return False
-        else:
+        time.sleep(4)
+        if self.is_element_present(*self._duo_iframe_locator):
             self.selenium.switch_to_frame('duo_iframe')
             is_message_shown = self.selenium.find_element(*self._error_message_locator).is_displayed()
             self.selenium.switch_to_default_content()
             return is_message_shown
+        return False
 
     def wait_for_passcode_to_change(self, secret_seed, current_passcode):
         WebDriverWait(self.selenium, self.timeout).until(lambda s: conftest.passcode(secret_seed) != current_passcode)
