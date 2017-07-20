@@ -108,7 +108,7 @@ class TestLogin:
         while two_factor_authentication_page.is_error_message_displayed:
             two_factor_authentication_page.wait_for_passcode_to_change(ldap['secret_seed'], current_passcode)
             two_factor_authentication_page.enter_passcode(conftest.passcode(ldap['secret_seed']))
-        assert test.is_logout_button_displayed
+        assert test.is_user_menu_displayed
         access_token = conftest.access_token(token)
         api = token['api']
         user_logs = requests.get(api, headers={'Authorization': 'Bearer {0}'.format(access_token)})

@@ -16,8 +16,8 @@ class Standups(Base):
         self.go_to_url(url)
 
     @property
-    def is_logout_button_displayed(self):
-        return self.is_element_visible(*self._logout_button_locator)
+    def is_user_menu_displayed(self):
+        return self.is_element_visible(*self._user_menu_locator)
 
     def login_with_ldap(self, email, password):
         self.selenium.find_element(*self._sign_in_button_locator).click()
