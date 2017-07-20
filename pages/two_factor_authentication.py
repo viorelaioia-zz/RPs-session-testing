@@ -21,7 +21,7 @@ class TwoFactorAuthentication(Base):
 
     @property
     def is_error_message_displayed(self):
-        if self.is_element_present(*self._duo_iframe_locator):
+        if self.is_element_visible(*self._duo_iframe_locator):
             self.selenium.switch_to_frame('duo_iframe')
             is_message_shown = self.selenium.find_element(*self._error_message_locator).is_displayed()
             self.selenium.switch_to_default_content()
