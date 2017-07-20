@@ -26,8 +26,7 @@ class TwoFactorAuthentication(Base):
             is_message_shown = self.selenium.find_element(*self._error_message_locator).is_displayed()
             self.selenium.switch_to_default_content()
             return is_message_shown
-        else:
-            return False
+        return False
 
     def wait_for_passcode_to_change(self, secret_seed, current_passcode):
         WebDriverWait(self.selenium, self.timeout).until(lambda s: conftest.passcode(secret_seed) != current_passcode)
